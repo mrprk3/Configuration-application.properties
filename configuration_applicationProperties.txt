@@ -1,0 +1,44 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+import org.springframework.core.env.Environment;
+
+@Component
+@PropertySource("classpath:application.properties")
+public class ConfigProperties {
+	
+	@Autowired
+    private Environment env;
+
+    public String getConfigValue(String configKey){
+        return env.getProperty(configKey);
+    }
+
+}
+
+---------------------------------------------------------------------------------------------------
+		// Configuration
+
+		final String username = configProp.getConfigValue("spring.mail.username");
+		final String password = configProp.getConfigValue("spring.mail.password");
+		String portNumber = configProp.getConfigValue("spring.mail.port");
+		String hostName = configProp.getConfigValue("spring.mail.host");
+		String smtpAuth = configProp.getConfigValue("spring.mail.properties.mail.smtp.auth");
+		String starttlsEnable = configProp.getConfigValue("spring.mail.properties.mail.smtp.starttls.enable");
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", smtpAuth);
+		props.put("mail.smtp.starttls.enable", starttlsEnable);
+		props.put("mail.smtp.host", hostName);
+		props.put("mail.smtp.port", portNumber);
+
+----------------------------------------------------------------------------------------------------
+//application.properties
+
+spring.mail.host=smtp.office365.com
+spring.mail.port=587
+spring.mail.username=mrprk6@outlook.com
+spring.mail.password=Stdio.hatim1990
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
